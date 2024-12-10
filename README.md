@@ -9,5 +9,5 @@ Handle command arguments.
 Implement input redirection (<), output redirection (>), and piping (|).
 Manage process creation and termination.
 Requirements
-All C source files are compiled with gcc using -Wall -Werror -Wextra -pedantic flags.
-The shell runs on Ubuntu 14.04 LTS or newer.
+All C source files are compiled with gcc using -Wall -Werror -Wextra -pedantic -std=gnu89.
+The shell runs onUbuntu 20.04 LTS.

@@ -1,0 +1,41 @@
+NAME
+     hsh - simple UNIX command-line interpreter
+
+SYNOPSIS
+     hsh [options] [command]
+
+DESCRIPTION
+     hsh is a command-line interpreter that reads user input, executes 
+     commands, and displays results. It works similarly to standard 
+     shells like bash or sh.
+
+OPTIONS
+     There are no special options for hsh.
+
+COMMANDS
+     Built-in Commands:
+          exit [status]
+               Exit the shell with an optional exit status. If no 
+               status is provided, it defaults to 0.
+
+          env
+               Display the current environment variables.
+
+     External Commands:
+          hsh supports execution of external programs found in the 
+          PATH environment variable.
+
+EXAMPLES
+     Launching hsh:
+          ./hsh
+
+     Running commands:
+          $ ls -l
+          $ echo "Hello, Shell!"
+          $ exit 0
+
+AUTHOR
+     Dew Doan, Jacob Phelan, Michael Ludice.
+
+SEE ALSO
+     bash(1), sh(1)

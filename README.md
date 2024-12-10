@@ -76,6 +76,6 @@ ___
 
 ## __Authors__
 - Dew Doan <bongban2003@gmail.com>
-- Jacob Phelan <>
+- Jacob Phelan <Jacobsdevsmail@gmail.com>
 - Michael Ludice <Vaetal98@gmail.com>
 ___

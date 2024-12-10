@@ -1,13 +1,11 @@
 <picture>
- <source media="(prefers-color-scheme: dark)" srcset="YOUR-DARKMODE-IMAGE">
- <source media="(prefers-color-scheme: light)" srcset="YOUR-LIGHTMODE-IMAGE">
- <img alt="YOUR-ALT-TEXT" src="YOUR-DEFAULT-IMAGE">
+ <img alt="Holberton Logo" src="">
 </picture>
 
 # __Introduction__
 This project is a simple UNIX command-line interpreter, or shell, built as part of a C programming curriculum. The shell replicates basic functionalities of standard shells like sh or bash.
 
-Features
+## _Features_
 Display a prompt and wait for user input.
 Execute built-in commands like exit and env.
 Execute system commands found in PATH.

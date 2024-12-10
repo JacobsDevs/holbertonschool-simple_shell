@@ -1,5 +1,5 @@
 <picture>
- <img alt="Holberton Logo" src="">
+ <img alt="Holberton Logo" src="./Holberton LinkedIn Cover FINAL.png">
 </picture>
 
 # __Introduction__

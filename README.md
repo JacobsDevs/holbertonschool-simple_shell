@@ -1,4 +1,4 @@
-Introduction
+#__Introduction__
 This project is a simple UNIX command-line interpreter, or shell, built as part of a C programming curriculum. The shell replicates basic functionalities of standard shells like sh or bash.
 
 Features

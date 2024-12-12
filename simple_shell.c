@@ -14,9 +14,10 @@ int main(void)
 	char *input;
 	char *buffer;
 	size_t buffer_size = 64;
-	char *argv[] = {NULL};
-	char *envp[] = {"PATH=/home/jacob/.local/share/mise/installs/ruby/3.3.6/bin:/home/jacob/.local/share/mise/installs/node/22.11.0/bin:./bin:/home/jacob/.local/bin:/home/jacob/.local/share/omakub/bin:/home/jacob/.local/bin:./bin:/home/jacob/.local/bin:/home/jacob/.local/share/omakub/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin", NULL};
+	char *argv[4];
+	int i = 0;
 	char *token;
+	char *tmp;
 	struct stat sb;
 
 	while (1)
@@ -30,7 +31,16 @@ int main(void)
 			break;
 		}
 		token = strtok(input, "\n");
-		if (stat(token, &sb) == -1)
+		token = strtok(token, " ");
+		while (token != NULL)
+		{
+			argv[i] = malloc(strlen(token));
+			strcpy(argv[i], token);
+			token = strtok(NULL, " ");
+			i++;
+		}
+		argv[i] = NULL;
+		if (stat(argv[0], &sb) == -1)
 		{
 			printf("Not found: %s\n", token);
 			continue;
@@ -40,7 +50,8 @@ int main(void)
 			printf("Failed to start child\n");
 		if (child == 0)
 		{
-			execve(token, argv, environ);
+			if (execve(argv[0], argv, environ) == -1)
+				printf("Unable to exec\n");
 			return (0);
 		}
 		else 

@@ -7,7 +7,7 @@
 #include <sys/stat.h>
 #include "main.h"
 
-extern char **environ;
+/*extern char **environ;*/
 
 /**
  * main - Main shell process.  Prompts the user for input and then uses

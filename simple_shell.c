@@ -93,7 +93,7 @@ void clean_args(char *args[])
 
 	while (args[i] != NULL)
 	{
-		args[i] = "";
+		args[i] = NULL;
 		i++;
 	}
 	/*print_args(args);*/

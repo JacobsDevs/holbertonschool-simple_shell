@@ -21,7 +21,6 @@ int main(void)
 {
 	pid_t child;
 	char *input;
-	char *buffer;
 	size_t buffer_size = 64;
 	char *argv[4];
 	struct stat sb;

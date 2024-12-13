@@ -1,7 +1,7 @@
 #include <unistd.h>
 #include <stdio.h>
 
-int main(void)
+int ppid(void)
 {
 	printf("%u\n", getppid());
 	return (0);

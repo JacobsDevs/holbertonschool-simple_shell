@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-int main(int argc, char **argv)
+int _while(int argc, char **argv)
 {
 	const char *path = "PATH";
 	char *paths = getenv(path);
@@ -14,6 +14,7 @@ int main(int argc, char **argv)
 	struct stat sb;
 	DIR *curr_dir;
 	struct dirent *file;
+	(void)argc;
 
 	token = strtok(paths, ":");
 	while (token != NULL)
@@ -28,17 +29,21 @@ int main(int argc, char **argv)
 			token = strtok(NULL, ":");
 			continue;
 		}
-		while ((file = readdir(curr_dir)) != NULL);
+		while ((file = readdir(curr_dir)) != NULL)
 		{
-			if (stat(file_in_dir, &sb) == 0) //If it exists
+			/*If it exists*/
+
+			if (stat(file_in_dir, &sb) == 0)
 			{
-				printf("%s\n", file_in_dir); //print out the directory
+				/*print out the directory*/
+
+				printf("%s\n", file_in_dir);
 				return (1);
 			}
 		}
 		closedir(curr_dir);
 		free(file_in_dir);
-		token = strtok(NULL, ":");  //else iterate*/
+		token = strtok(NULL, ":");
 	}
 	return (0);
 }

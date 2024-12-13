@@ -32,7 +32,7 @@ int main(int argc, char **argv)
 		{
 			if (stat(file_in_dir, &sb) == 0) //If it exists
 			{
-				printf("%s\n", token); //print out the directory
+				printf("%s\n", file_in_dir); //print out the directory
 				return (1);
 			}
 		}

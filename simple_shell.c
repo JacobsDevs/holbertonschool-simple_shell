@@ -65,7 +65,7 @@ int main(void)
 		if (isatty(0) == 0)
 			break;
 	}
-	return (1);
+	return (0);
 }
 
 /**

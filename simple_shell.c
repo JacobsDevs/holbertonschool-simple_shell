@@ -36,8 +36,11 @@ int main(void)
 		}
 		if (isatty(0) == 0)
 		{
-			get_input(argv);
-			fflush(stdin);
+			if (get_input(argv) == 1)
+			{
+				clean_argv(argv, count);
+				break;
+			}
 		}
 		else
 		{
@@ -62,8 +65,6 @@ int main(void)
 			wait(&child);
 			clean_argv(argv, count);
 		}
-		if (isatty(0) == 0)
-			break;
 	}
 	return (0);
 }
@@ -89,9 +90,11 @@ char **malloc_argv(int count)
 /**
  * get_input - Gets input from the user and stores it in argv
  * @argv: Pointer to pointer of argv
+ *
+ * Return: 0 for success 1 for failure to read line.
  */
 
-void get_input(char **argv)
+int get_input(char **argv)
 {
 	char *buffer = NULL;
 	size_t bsize = 100;
@@ -100,9 +103,8 @@ void get_input(char **argv)
 
 	if (getline(&buffer, &bsize, stdin) == -1)
 	{
-		printf("Failed to read line\n");
 		free(buffer);
-		return;
+		return (1);
 	}
 	token = strtok(buffer, "\n");
 	token = strtok(token, " ");
@@ -113,7 +115,7 @@ void get_input(char **argv)
 		i++;
 	}
 	free(buffer);
-	free(token);
+	return (0);
 }
 
 /**

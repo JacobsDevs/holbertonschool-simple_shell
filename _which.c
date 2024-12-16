@@ -33,9 +33,6 @@ char *which(char *argv)
 		{
 			if (stat(file_in_dir, &sb) == 0)
 			{
-				paths = getenv("PATH");
-				printf("%s", paths);
-				printf("Returning: %s\n", file_in_dir);
 				return (file_in_dir);
 			}
 		}

@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-int _while(int argc, char **argv)
+int main(int argc, char **argv)
 {
 	const char *path = "PATH";
 	char *paths = getenv(path);

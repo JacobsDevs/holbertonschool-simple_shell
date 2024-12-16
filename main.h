@@ -3,9 +3,8 @@
 
 extern char **environ;
 
-void clean_args(char *args[]);
-void print_args(char *args[]);
-void build_args(char *input, char *argv[]);
-int setup_argv(char **argv, int size);
+char **malloc_argv(int count);
+void clean_argv(char **argv, int count);
+void get_input(char **argv);
 
 #endif

@@ -47,7 +47,7 @@ int main(void)
 			printf("$ ");
 			get_input(argv);
 		}
-		if (stat(argv[0], &sb) == -1)
+		if (argv[0] == NULL || stat(argv[0], &sb) == -1)
 		{
 			/*printf("%s: command not found\n", argv[0]);*/
 			clean_argv(argv, count);

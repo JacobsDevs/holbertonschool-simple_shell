@@ -25,6 +25,7 @@ int main(void)
 	struct stat sb;
 	int count = 3;
 	int running = 1;
+	char *tmp = NULL;
 
 	while (running == 1)
 	{
@@ -49,9 +50,15 @@ int main(void)
 		}
 		if (argv[0] == NULL || stat(argv[0], &sb) == -1)
 		{
-			/*printf("%s: command not found\n", argv[0]);*/
-			clean_argv(argv, count);
-			continue;
+			tmp = which(argv[0]);
+			if (stat(tmp, &sb) == -1)
+			{
+				printf("%s: command not found\n", argv[0]);
+				clean_argv(argv, count);
+				continue;
+			}
+			else
+				argv[0] = strdup(tmp);
 		}
 		if (strcmp(argv[0], "exit") == 0)
 			execve(argv[0], argv, environ);
@@ -64,6 +71,7 @@ int main(void)
 		{
 			wait(&child);
 			clean_argv(argv, count);
+			free(tmp);
 		}
 	}
 	return (0);

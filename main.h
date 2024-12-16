@@ -6,5 +6,6 @@ extern char **environ;
 char **malloc_argv(int count);
 void clean_argv(char **argv, int count);
 int get_input(char **argv);
+char *which(char *argv);
 
 #endif

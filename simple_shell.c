@@ -49,7 +49,7 @@ int main(void)
 		}
 		if (stat(argv[0], &sb) == -1)
 		{
-			printf("%s: command not found\n", argv[0]);
+			/*printf("%s: command not found\n", argv[0]);*/
 			clean_argv(argv, count);
 			continue;
 		}

@@ -53,10 +53,10 @@ int main(void)
 			tmp = which(argv[0]);
 			if (tmp == NULL || stat(tmp, &sb) == -1)
 			{
-				fprintf(stderr, "%s: not found\n", argv[0]);
+				fprintf(stderr, "./hsh: 1: %s: not found\n", argv[0]);
 				free(tmp);
 				clean_argv(argv, count);
-				continue;
+				exit(127);
 			}
 			else
 			{

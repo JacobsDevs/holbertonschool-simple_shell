@@ -62,6 +62,7 @@ int main(void)
 			{
 				free(argv[0]);
 				argv[0] = strdup(tmp);
+				free(tmp);
 			}
 		}
 		if (strcmp(argv[0], "exit") == 0)
@@ -79,7 +80,6 @@ int main(void)
 			wait(&child);
 		}
 		clean_argv(argv, count);
-		free(tmp);
 	}
 	return (0);
 }

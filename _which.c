@@ -54,5 +54,6 @@ char *which(char *argv)
 		free(file_in_dir);
 		token = strtok(NULL, ":");
 	}
+	free(pathstring);
 	return (NULL);
 }

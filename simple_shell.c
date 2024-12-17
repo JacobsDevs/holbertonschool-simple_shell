@@ -51,9 +51,10 @@ int main(void)
 		if (argv[0] == NULL || stat(argv[0], &sb) == -1)
 		{
 			tmp = which(argv[0]);
-			if (stat(tmp, &sb) == -1)
+			if (tmp == NULL || stat(tmp, &sb) == -1)
 			{
-				printf("%s: command not found\n", argv[0]);
+				fprintf(stderr, "%s: not found\n", argv[0]);
+				free(tmp);
 				clean_argv(argv, count);
 				continue;
 			}

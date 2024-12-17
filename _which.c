@@ -4,18 +4,30 @@
 #include <dirent.h>
 #include <stdlib.h>
 #include <string.h>
+#include "main.h"
 
 char *which(char *argv)
 {
-	const char *path = "PATH";
-	char *paths = getenv(path);
-	char *pathstring = strdup(paths);
-	char *token;
+	char *pathstring = NULL;
 	char *file_in_dir;
 	struct stat sb;
 	DIR *curr_dir;
 	struct dirent *file;
+	int i = 0;
+	char *token;
+	char *tmp_env = NULL;
 
+	while (environ[i] != NULL)
+	{
+		tmp_env = strdup(environ[i]);
+		token = strtok(tmp_env, "=");
+		if (strcmp(token, "PATH") == 0)
+		{
+			pathstring = strdup(strtok(NULL, "="));
+		}
+		i++;
+		free(tmp_env);
+	}
 	token = strtok(pathstring, ":");
 	while (token != NULL)
 	{
@@ -33,6 +45,8 @@ char *which(char *argv)
 		{
 			if (stat(file_in_dir, &sb) == 0)
 			{
+				closedir(curr_dir);
+				free(pathstring);
 				return (file_in_dir);
 			}
 		}

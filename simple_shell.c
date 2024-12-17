@@ -58,7 +58,10 @@ int main(void)
 				continue;
 			}
 			else
+			{
+				free(argv[0]);
 				argv[0] = strdup(tmp);
+			}
 		}
 		if (strcmp(argv[0], "exit") == 0)
 		{
@@ -108,7 +111,7 @@ char **malloc_argv(int count)
 int get_input(char **argv)
 {
 	char *buffer = NULL;
-	size_t bsize = 100;
+	size_t bsize = 0;
 	char *token = NULL;
 	int i = 0;
 
@@ -125,6 +128,12 @@ int get_input(char **argv)
 		token = strtok(NULL, " ");
 		i++;
 	}
+	i = 0;
+	while (argv[i] != NULL)
+	{
+		printf("%s\n", argv[i]);
+		i++;
+	}
 	free(buffer);
 	return (0);
 }
@@ -137,11 +146,14 @@ int get_input(char **argv)
 
 void clean_argv(char **argv, int count)
 {
-	int i;
+	int i = 0;
+	(void) count;
 
-	for (i = 0; i < count; i++)
+	printf("%s\n",argv[0]);
+	while (argv[i] != NULL)
 	{
 		free(argv[i]);
+		i++;
 	}
 	free(argv);
 }

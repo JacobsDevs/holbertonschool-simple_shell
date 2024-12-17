@@ -23,7 +23,7 @@ int main(void)
 	pid_t child;
 	char **argv = NULL;
 	struct stat sb;
-	int count = 3;
+	int count = 10;
 	int running = 1;
 	char *tmp = NULL;
 
@@ -128,12 +128,6 @@ int get_input(char **argv)
 		token = strtok(NULL, " ");
 		i++;
 	}
-	i = 0;
-	while (argv[i] != NULL)
-	{
-		printf("%s\n", argv[i]);
-		i++;
-	}
 	free(buffer);
 	return (0);
 }
@@ -149,7 +143,6 @@ void clean_argv(char **argv, int count)
 	int i = 0;
 	(void) count;
 
-	printf("%s\n",argv[0]);
 	while (argv[i] != NULL)
 	{
 		free(argv[i]);

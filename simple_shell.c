@@ -61,7 +61,10 @@ int main(void)
 				argv[0] = strdup(tmp);
 		}
 		if (strcmp(argv[0], "exit") == 0)
-			execve(argv[0], argv, environ);
+		{
+			clean_argv(argv, count);
+			exit(0);
+		}
 		child = fork();
 		if (child == -1)
 			printf("Failed to Fork");
@@ -70,9 +73,9 @@ int main(void)
 		else
 		{
 			wait(&child);
-			clean_argv(argv, count);
-			free(tmp);
 		}
+		clean_argv(argv, count);
+		free(tmp);
 	}
 	return (0);
 }

@@ -43,13 +43,16 @@ int main(void)
 				clean_argv(argv, count);
 				break;
 			}
-			if (argv[0] == NULL)
-				exit(0);
 		}
 		else
 		{
 			printf("$ ");
 			get_input(argv);
+		}
+		if (argv[0] == NULL)
+		{
+			clean_argv(argv, count);
+			exit(0);
 		}
 		if (argv[0] == NULL || stat(argv[0], &sb) == -1)
 		{

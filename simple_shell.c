@@ -38,7 +38,6 @@ int main(void)
 		}
 		if (isatty(0) == 0)
 		{
-			printf("Look at me\n");
 			if (get_input(argv) == 1)
 			{
 				clean_argv(argv, count);
@@ -53,7 +52,7 @@ int main(void)
 		if (argv[0] == NULL)
 		{
 			clean_argv(argv, count);
-			exit(0);
+			continue;
 		}
 		if (argv[0] == NULL || stat(argv[0], &sb) == -1)
 		{
@@ -75,7 +74,6 @@ int main(void)
 		if (strcmp(argv[0], "exit") == 0)
 		{
 			clean_argv(argv, count);
-			printf("%d", errno);
 			exit(errno);
 		}
 		child = fork();

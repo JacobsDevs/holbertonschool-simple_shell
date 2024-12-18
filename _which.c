@@ -17,7 +17,6 @@ char *which(char *argv)
 	char *token;
 	char *tmp_env = NULL;
 
-	unsetenv("PATH");
 	while (environ[i] != NULL)
 	{
 		tmp_env = strdup(environ[i]);

@@ -5,6 +5,7 @@
 #include <string.h>
 #include <dirent.h>
 #include <sys/stat.h>
+#include <errno.h>
 #include "main.h"
 
 #define MAX_STRING_LENGTH 20
@@ -33,7 +34,7 @@ int main(void)
 		if (argv == NULL)
 		{
 			printf("Failed to malloc argv\n");
-			return (1);
+			exit(1);
 		}
 		if (isatty(0) == 0)
 		{
@@ -42,6 +43,8 @@ int main(void)
 				clean_argv(argv, count);
 				break;
 			}
+			if (argv[0] == NULL)
+				exit(0);
 		}
 		else
 		{
@@ -68,13 +71,17 @@ int main(void)
 		if (strcmp(argv[0], "exit") == 0)
 		{
 			clean_argv(argv, count);
-			exit(0);
+			printf("%d", errno);
+			exit(errno);
 		}
 		child = fork();
 		if (child == -1)
 			printf("Failed to Fork");
 		if (child == 0)
+		{
 			execve(argv[0], argv, environ);
+			printf("Child failed");
+		}
 		else
 		{
 			wait(&child);
@@ -115,7 +122,7 @@ int get_input(char **argv)
 	size_t bsize = 0;
 	char *token = NULL;
 	int i = 0;
-
+ 
 	if (getline(&buffer, &bsize, stdin) == -1)
 	{
 		free(buffer);

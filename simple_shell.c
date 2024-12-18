@@ -27,6 +27,8 @@ int main(void)
 	int count = 10;
 	int running = 1;
 	char *tmp = NULL;
+  int exit_status = 0;
+  int exitp;
 
 	while (running == 1)
 	{
@@ -74,7 +76,7 @@ int main(void)
 		if (strcmp(argv[0], "exit") == 0)
 		{
 			clean_argv(argv, count);
-			exit(0);
+			exit(exit_status);
 		}
 		child = fork();
 		if (child == -1)
@@ -86,7 +88,8 @@ int main(void)
 		}
 		else
 		{
-			wait(&child);
+			waitpid(child, &exitp, 0);
+      exit_status = WEXITSTATUS(exitp);
 		}
 		clean_argv(argv, count);
 	}

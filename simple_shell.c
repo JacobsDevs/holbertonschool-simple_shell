@@ -43,7 +43,6 @@ int main(void)
 				clean_argv(argv, count);
 				break;
 			}
-			printf("Checked complete \n");
 			if (argv[0] == NULL)
 				exit(0);
 		}
@@ -124,7 +123,6 @@ int get_input(char **argv)
 	char *token = NULL;
 	int i = 0;
  
-	printf("Checking line\n");
 	if (getline(&buffer, &bsize, stdin) == -1)
 	{
 		free(buffer);
@@ -134,7 +132,6 @@ int get_input(char **argv)
 	token = strtok(token, " ");
 	while (token != NULL)
 	{
-		printf("Token = |%s|\n", token);
 		argv[i] = strdup(token);
 		token = strtok(NULL, " ");
 		i++;

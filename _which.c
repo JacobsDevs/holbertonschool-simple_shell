@@ -17,14 +17,14 @@ char *which(char *argv)
 	char *token;
 	char *tmp_env = NULL;
 
-  unsetenv("PATH");
-  setenv("PATH1", "/bin", 1);
+	unsetenv("PATH");
+	setenv("PATH1", "/bin", 1);
 	while (environ[i] != NULL)
 	{
 		tmp_env = strdup(environ[i]);
 		if (strcmp(tmp_env, "PATH=") == 0)
 		{
-      printf("FOUND\n");
+			printf("FOUND\n");
 			free(tmp_env);
 			return (NULL);
 		}

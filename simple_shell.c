@@ -27,8 +27,8 @@ int main(void)
 	int count = 10;
 	int running = 1;
 	char *tmp = NULL;
-  int exit_status = 0;
-  int exitp;
+	int exit_status = 0;
+	int exitp;
 
 	while (running == 1)
 	{
@@ -56,6 +56,17 @@ int main(void)
 			clean_argv(argv, count);
 			continue;
 		}
+		if (strcmp(argv[0], "exit") == 0)
+		{
+			clean_argv(argv, count);
+			exit(exit_status);
+		}
+		if (strcmp(argv[0], "env") == 0)
+		{
+			print_environ();
+			clean_argv(argv, count);
+			continue;
+		}
 		if (argv[0] == NULL || stat(argv[0], &sb) == -1)
 		{
 			tmp = which(argv[0]);
@@ -73,11 +84,6 @@ int main(void)
 				free(tmp);
 			}
 		}
-		if (strcmp(argv[0], "exit") == 0)
-		{
-			clean_argv(argv, count);
-			exit(exit_status);
-		}
 		child = fork();
 		if (child == -1)
 			printf("Failed to Fork");
@@ -89,9 +95,9 @@ int main(void)
 		else
 		{
 			waitpid(child, &exitp, 0);
-      exit_status = WEXITSTATUS(exitp);
+			exit_status = WEXITSTATUS(exitp);
 		}
-		clean_argv(argv, count);
+			clean_argv(argv, count);
 	}
 	return (0);
 }
@@ -127,7 +133,7 @@ int get_input(char **argv)
 	size_t bsize = 0;
 	char *token = NULL;
 	int i = 0;
- 
+
 	if (getline(&buffer, &bsize, stdin) == -1)
 	{
 		free(buffer);
@@ -162,4 +168,20 @@ void clean_argv(char **argv, int count)
 		i++;
 	}
 	free(argv);
+}
+
+/**
+ * print_environ - Iterates through the environ variable and prints each one to
+ * stdout.
+ */
+
+void print_environ(void)
+{
+	int i = 0;
+
+	while (environ[i] != NULL)
+	{
+		printf("%s\n", environ[i]);
+		i++;
+	}
 }

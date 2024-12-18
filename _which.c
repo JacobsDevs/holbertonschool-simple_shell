@@ -17,6 +17,7 @@ char *which(char *argv)
 	char *token;
 	char *tmp_env = NULL;
 
+	unsetenv("PATH");
 	while (environ[i] != NULL)
 	{
 		tmp_env = strdup(environ[i]);
@@ -28,6 +29,8 @@ char *which(char *argv)
 		i++;
 		free(tmp_env);
 	}
+	if (pathstring == NULL)
+		return (NULL);
 	token = strtok(pathstring, ":");
 	while (token != NULL)
 	{

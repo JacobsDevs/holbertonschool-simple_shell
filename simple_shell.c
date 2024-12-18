@@ -38,6 +38,7 @@ int main(void)
 		}
 		if (isatty(0) == 0)
 		{
+			printf("Look at me\n");
 			if (get_input(argv) == 1)
 			{
 				clean_argv(argv, count);

@@ -74,7 +74,7 @@ int main(void)
 		if (strcmp(argv[0], "exit") == 0)
 		{
 			clean_argv(argv, count);
-			exit(errno);
+			exit(0);
 		}
 		child = fork();
 		if (child == -1)

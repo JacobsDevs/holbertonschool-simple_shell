@@ -20,6 +20,11 @@ char *which(char *argv)
 	while (environ[i] != NULL)
 	{
 		tmp_env = strdup(environ[i]);
+		if (strcmp(tmp_env, "PATH=") == 0)
+		{
+			free(tmp_env);
+			return (NULL);
+		}
 		token = strtok(tmp_env, "=");
 		if (strcmp(token, "PATH") == 0)
 		{

@@ -23,7 +23,7 @@ int main(void)
 {
 	pid_t child;
 	char **argv = NULL;
-	struct stat sb;
+	stat_t sb;
 	int count = 10;
 	int running = 1;
 	int exit_status = 0;
@@ -99,10 +99,6 @@ int get_input(char **argv)
 	size_t bsize = 0;
 	char *token = NULL;
 	int i = 0;
-	int j = 0;
-	char *tok = NULL;
-	char *hold = NULL;
-	int path_found = 0;
 
 	if (isatty(0) != 0)
 		printf("$ ");
@@ -118,18 +114,7 @@ int get_input(char **argv)
 		argv[i++] = strdup(token);
 		token = strtok(NULL, " ");
 	}
-	while (environ[j] != NULL)
-	{
-		hold = strdup(environ[j]);
-		tok = strtok(hold, "=");
-		if (strcmp(tok, "PATH") == 0)
-			path_found = 1;
-		j++;
-		free(hold);
-	}
 	free(buffer);
-	if (path_found == 0)
-		invalid_path(argv);
 	return (0);
 }
 
@@ -148,30 +133,4 @@ void clean_argv(char **argv)
 		i++;
 	}
 	free(argv);
-}
-
-/**
- * search_for_function - Uses which to locate the function in the PATH env
- * variables.
- * @argv: Pointer to the argv array.
- * @sb: stat struct used to validate file.
- */
-void search_for_function(char **argv, stat_t sb)
-{
-	char *tmp = NULL;
-
-	tmp = which(argv[0]);
-	if (tmp == NULL || stat(tmp, &sb) == -1)
-	{
-		fprintf(stderr, "./hsh: 1: %s: not found\n", argv[0]);
-		free(tmp);
-		clean_argv(argv);
-		exit(127);
-	}
-	else
-	{
-		free(argv[0]);
-		argv[0] = strdup(tmp);
-		free(tmp);
-	}
 }

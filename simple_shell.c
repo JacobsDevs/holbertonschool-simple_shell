@@ -124,16 +124,12 @@ int get_input(char **argv)
 		tok = strtok(hold, "=");
 		if (strcmp(tok, "PATH") == 0)
 			path_found = 1;
-		if (strcmp(tok, "PATH1") == 0 && path_found == 0)
-		{
-			free(hold);
-			free(buffer);
-			invalid_path(argv);
-		}
 		j++;
 		free(hold);
 	}
 	free(buffer);
+	if (path_found == 0)
+		invalid_path(argv);
 	return (0);
 }
 

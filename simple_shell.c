@@ -77,13 +77,21 @@ char **malloc_argv(int count)
 	int j = 0;
 	char *tok = NULL;
 	char *hold = NULL;
+	int path_found = 0;
 
 	while (environ[j] != NULL)
 	{
 		hold = strdup(environ[j]);
 		tok = strtok(hold, "=");
-		if (strcmp(tok, "PATH1") == 0)
-			printf("%s\n", environ[j]);
+		if (strcmp(tok, "PATH") == 0)
+			path_found = 1;
+		if (strcmp(tok, "PATH1") == 0 && path_found == 0)
+		{
+			fprintf(stderr, "./hsh: 1: %s: not found\n", argv[0]);
+			free(tmp);
+			clean_argv(argv);
+			exit(127);
+		}
 		j++;
 		free(hold);
 	}

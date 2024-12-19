@@ -12,5 +12,6 @@ void print_environ(char **argv);
 void run_exit(char **argv, int exit_status);
 void search_for_function(char **argv, stat_t sb);
 char *find_path(char *pathstring);
+void invalid_path(char **argv);
 
 #endif

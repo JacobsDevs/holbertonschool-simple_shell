@@ -74,27 +74,7 @@ char **malloc_argv(int count)
 {
 	char **args = NULL;
 	int i;
-	int j = 0;
-	char *tok = NULL;
-	char *hold = NULL;
-	int path_found = 0;
 
-	while (environ[j] != NULL)
-	{
-		hold = strdup(environ[j]);
-		tok = strtok(hold, "=");
-		if (strcmp(tok, "PATH") == 0)
-			path_found = 1;
-		if (strcmp(tok, "PATH1") == 0 && path_found == 0)
-		{
-			fprintf(stderr, "./hsh: 1: %s: not found\n", argv[0]);
-			free(tmp);
-			clean_argv(argv);
-			exit(127);
-		}
-		j++;
-		free(hold);
-	}
 	args = (char **)malloc(count * sizeof(char *));
 	for (i = 0; i < count; i++)
 		args[i] = NULL;
@@ -119,6 +99,10 @@ int get_input(char **argv)
 	size_t bsize = 0;
 	char *token = NULL;
 	int i = 0;
+	int j = 0;
+	char *tok = NULL;
+	char *hold = NULL;
+	int path_found = 0;
 
 	if (isatty(0) != 0)
 		printf("$ ");
@@ -131,9 +115,23 @@ int get_input(char **argv)
 	token = strtok(token, " ");
 	while (token != NULL)
 	{
-		argv[i] = strdup(token);
+		argv[i++] = strdup(token);
 		token = strtok(NULL, " ");
-		i++;
+	}
+	while (environ[j] != NULL)
+	{
+		hold = strdup(environ[j]);
+		tok = strtok(hold, "=");
+		if (strcmp(tok, "PATH") == 0)
+			path_found = 1;
+		if (strcmp(tok, "PATH1") == 0 && path_found == 0)
+		{
+			free(hold);
+			free(buffer);
+			invalid_path(argv);
+		}
+		j++;
+		free(hold);
 	}
 	free(buffer);
 	return (0);

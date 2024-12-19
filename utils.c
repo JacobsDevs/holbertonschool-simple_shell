@@ -29,3 +29,14 @@ void run_exit(char **argv, int exit_status)
 	clean_argv(argv);
 	exit(exit_status);
 }
+
+/**
+ * invalid_path - exits the program when PATH is not found
+ * @argv: Pointer to the argv array.
+ */
+void invalid_path(char **argv)
+{
+	fprintf(stderr, "./hsh: 1: %s: not found\n", argv[0]);
+	clean_argv(argv);
+	exit(127);
+}

@@ -46,7 +46,7 @@ int main(void)
 			print_environ(argv);
 			continue;
 		}
-		if (stat(argv[0], &sb) == -1 && check_valid_env(argv))
+		if (stat(argv[0], &sb) == -1)
 			search_for_function(argv, sb);
 		child = fork();
 		if (child == -1)
@@ -99,6 +99,7 @@ int get_input(char **argv)
 	size_t bsize = 0;
 	char *token = NULL;
 	int i = 0;
+	stat_t sb;
 
 	if (isatty(0) != 0)
 		printf("$ ");
@@ -114,6 +115,8 @@ int get_input(char **argv)
 		argv[i++] = strdup(token);
 		token = strtok(NULL, " ");
 	}
+	if (stat(argv[0], &sb) == -1)
+		check_valid_env(argv);
 	free(buffer);
 	return (0);
 }

@@ -75,7 +75,7 @@ void search_for_function(char **argv, stat_t sb)
  * quits the program if non exists.
  * @argv: Pointer to the argv array.
  */
-bool check_valid_env(char **argv)
+void check_valid_env(char **argv)
 {
 	char *tok = NULL;
 	char *hold = NULL;
@@ -95,5 +95,4 @@ bool check_valid_env(char **argv)
 	{
 		invalid_path(argv);
 	}
-	return (true);
 }

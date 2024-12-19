@@ -115,7 +115,7 @@ int get_input(char **argv)
 		argv[i++] = strdup(token);
 		token = strtok(NULL, " ");
 	}
-	if (stat(argv[0], &sb) == -1)
+	if (argv[0] != NULL && stat(argv[0], &sb) == -1)
 		check_valid_env(argv);
 	free(buffer);
 	return (0);

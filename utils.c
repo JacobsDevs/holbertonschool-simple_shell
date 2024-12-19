@@ -93,7 +93,6 @@ void check_valid_env(char **argv)
 	}
 	if (path_found == 0)
 	{
-		printf("Why though?\n");
 		invalid_path(argv);
 	}
 }

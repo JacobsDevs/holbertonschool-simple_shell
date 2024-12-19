@@ -82,6 +82,7 @@ void check_valid_env(char **argv)
 	int j = 0;
 	int path_found = 0;
 
+	printf("Why though?\n");
 	while (environ[j] != NULL)
 	{
 		hold = strdup(environ[j]);

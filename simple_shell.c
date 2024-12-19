@@ -29,7 +29,6 @@ int main(void)
 	int exit_status = 0;
 	int exitp;
 
-	setenv("PATH1", "", 1);
 	while (running == 1)
 	{
 		argv = malloc_argv(count);

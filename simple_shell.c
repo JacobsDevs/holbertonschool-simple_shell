@@ -46,7 +46,7 @@ int main(void)
 			print_environ(argv);
 			continue;
 		}
-		if (stat(argv[0], &sb) == -1)
+		if (stat(argv[0], &sb) == -1 && check_valid_env(argv))
 			search_for_function(argv, sb);
 		child = fork();
 		if (child == -1)

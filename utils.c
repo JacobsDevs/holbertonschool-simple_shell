@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <stdbool.h>
 /**
  * print_environ - Iterates through the environ variable and prints each one to
  * stdout.
@@ -53,7 +54,6 @@ void search_for_function(char **argv, stat_t sb)
 {
 	char *tmp = NULL;
 
-	check_valid_env(argv);
 	tmp = which(argv[0]);
 	if (tmp == NULL || stat(tmp, &sb) == -1)
 	{
@@ -75,7 +75,7 @@ void search_for_function(char **argv, stat_t sb)
  * quits the program if non exists.
  * @argv: Pointer to the argv array.
  */
-void check_valid_env(char **argv)
+bool check_valid_env(char **argv)
 {
 	char *tok = NULL;
 	char *hold = NULL;
@@ -95,4 +95,5 @@ void check_valid_env(char **argv)
 	{
 		invalid_path(argv);
 	}
+	return (true);
 }

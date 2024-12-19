@@ -26,78 +26,39 @@ int main(void)
 	struct stat sb;
 	int count = 10;
 	int running = 1;
-	char *tmp = NULL;
 	int exit_status = 0;
 	int exitp;
 
 	while (running == 1)
 	{
 		argv = malloc_argv(count);
-		if (argv == NULL)
-		{
-			printf("Failed to malloc argv\n");
-			exit(1);
-		}
-		if (isatty(0) == 0)
-		{
-			if (get_input(argv) == 1)
-			{
-				clean_argv(argv, count);
-				break;
-			}
-		}
-		else
-		{
-			printf("$ ");
-			get_input(argv);
-		}
+		if (get_input(argv) == 1)
+			run_exit(argv, exit_status);
 		if (argv[0] == NULL)
 		{
-			clean_argv(argv, count);
+			clean_argv(argv);
 			continue;
 		}
 		if (strcmp(argv[0], "exit") == 0)
-		{
-			clean_argv(argv, count);
-			exit(exit_status);
-		}
+			run_exit(argv, exit_status);
 		if (strcmp(argv[0], "env") == 0)
 		{
-			print_environ();
-			clean_argv(argv, count);
+			print_environ(argv);
 			continue;
 		}
-		if (argv[0] == NULL || stat(argv[0], &sb) == -1)
-		{
-			tmp = which(argv[0]);
-			if (tmp == NULL || stat(tmp, &sb) == -1)
-			{
-				fprintf(stderr, "./hsh: 1: %s: not found\n", argv[0]);
-				free(tmp);
-				clean_argv(argv, count);
-				exit(127);
-			}
-			else
-			{
-				free(argv[0]);
-				argv[0] = strdup(tmp);
-				free(tmp);
-			}
-		}
+		if (stat(argv[0], &sb) == -1)
+			search_for_function(argv, sb);
 		child = fork();
 		if (child == -1)
 			printf("Failed to Fork");
 		if (child == 0)
-		{
 			execve(argv[0], argv, environ);
-			printf("Child failed");
-		}
 		else
 		{
 			waitpid(child, &exitp, 0);
 			exit_status = WEXITSTATUS(exitp);
 		}
-			clean_argv(argv, count);
+		clean_argv(argv);
 	}
 	return (0);
 }
@@ -117,6 +78,11 @@ char **malloc_argv(int count)
 	args = (char **)malloc(count * sizeof(char *));
 	for (i = 0; i < count; i++)
 		args[i] = NULL;
+	if (args == NULL)
+	{
+		printf("Failed to malloc argv\n");
+		exit(1);
+	}
 	return (args);
 }
 
@@ -134,6 +100,8 @@ int get_input(char **argv)
 	char *token = NULL;
 	int i = 0;
 
+	if (isatty(0) != 0)
+		printf("$ ");
 	if (getline(&buffer, &bsize, stdin) == -1)
 	{
 		free(buffer);
@@ -154,13 +122,11 @@ int get_input(char **argv)
 /**
  * clean_argv - Frees all memory held by argv
  * @argv: Pointer to a pointer of argv
- * @count: The number of entries to expect in argv
  */
 
-void clean_argv(char **argv, int count)
+void clean_argv(char **argv)
 {
 	int i = 0;
-	(void) count;
 
 	while (argv[i] != NULL)
 	{
@@ -171,17 +137,27 @@ void clean_argv(char **argv, int count)
 }
 
 /**
- * print_environ - Iterates through the environ variable and prints each one to
- * stdout.
+ * search_for_function - Uses which to locate the function in the PATH env
+ * variables.
+ * @argv: Pointer to the argv array.
+ * @sb: stat struct used to validate file.
  */
-
-void print_environ(void)
+void search_for_function(char **argv, stat_t sb)
 {
-	int i = 0;
+	char *tmp = NULL;
 
-	while (environ[i] != NULL)
+	tmp = which(argv[0]);
+	if (tmp == NULL || stat(tmp, &sb) == -1)
 	{
-		printf("%s\n", environ[i]);
-		i++;
+		fprintf(stderr, "./hsh: 1: %s: not found\n", argv[0]);
+		free(tmp);
+		clean_argv(argv);
+		exit(127);
+	}
+	else
+	{
+		free(argv[0]);
+		argv[0] = strdup(tmp);
+		free(tmp);
 	}
 }

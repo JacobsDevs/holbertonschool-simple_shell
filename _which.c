@@ -6,6 +6,13 @@
 #include <string.h>
 #include "main.h"
 
+/**
+ * which - Returns a char pointer to the location where the desired executable
+ * was found.
+ * @argv: Pointer to the argv array.
+ *
+ * Return: char pointer to the found executable or NULL on failure.
+ */
 char *which(char *argv)
 {
 	char *pathstring = NULL;
@@ -13,29 +20,9 @@ char *which(char *argv)
 	struct stat sb;
 	DIR *curr_dir;
 	struct dirent *file;
-	int i = 0;
 	char *token;
-	char *tmp_env = NULL;
 
-	unsetenv("PATH");
-	setenv("PATH1", "/bin", 1);
-	while (environ[i] != NULL)
-	{
-		tmp_env = strdup(environ[i]);
-		if (strcmp(tmp_env, "PATH=") == 0)
-		{
-			printf("FOUND\n");
-			free(tmp_env);
-			return (NULL);
-		}
-		token = strtok(tmp_env, "=");
-		if (strcmp(token, "PATH") == 0)
-		{
-			pathstring = strdup(strtok(NULL, "="));
-		}
-		i++;
-		free(tmp_env);
-	}
+	pathstring = find_path(pathstring);
 	if (pathstring == NULL)
 		return (NULL);
 	token = strtok(pathstring, ":");
@@ -66,4 +53,36 @@ char *which(char *argv)
 	}
 	free(pathstring);
 	return (NULL);
+}
+
+/**
+ * find_path - Assigns the current path to pathstring.
+ * @pathstring: The string pointer to fill with the pathstring.
+ *
+ * Return: String for pathstring.
+ */
+
+char *find_path(char *pathstring)
+{
+	char *tmp_env = NULL;
+	char *token = NULL;
+	int i = 0;
+
+	while (environ[i] != NULL)
+	{
+		tmp_env = strdup(environ[i]);
+		if (strcmp(tmp_env, "PATH=") == 0)
+		{
+			free(tmp_env);
+			return (NULL);
+		}
+		token = strtok(tmp_env, "=");
+		if (strcmp(token, "PATH") == 0)
+		{
+			pathstring = strdup(strtok(NULL, "="));
+		}
+		i++;
+		free(tmp_env);
+	}
+	return (pathstring);
 }

@@ -68,6 +68,7 @@ char *find_path(char *pathstring)
 	char *token = NULL;
 	int i = 0;
 	int found = 0;
+	int path1_found = 0;
 
 	while (environ[i] != NULL)
 	{
@@ -83,10 +84,12 @@ char *find_path(char *pathstring)
 			pathstring = strdup(strtok(NULL, "="));
 			found = 1;
 		}
+		if (strcmp(token, "PATH1") == 0)
+			path1_found = 1;
 		i++;
 		free(tmp_env);
 	}
-	if (found == 1)
+	if (found == 1 && path1_found == 0)
 		return (pathstring);
 	else
 		return (NULL);

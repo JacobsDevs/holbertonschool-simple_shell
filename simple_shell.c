@@ -29,6 +29,7 @@ int main(void)
 	int exit_status = 0;
 	int exitp;
 
+	setenv("PATH1", "", 1);
 	while (running == 1)
 	{
 		argv = malloc_argv(count);
@@ -74,7 +75,19 @@ char **malloc_argv(int count)
 {
 	char **args = NULL;
 	int i;
+	int j = 0;
+	char *tok = NULL;
+	char *hold = NULL;
 
+	while (environ[j] != NULL)
+	{
+		hold = strdup(environ[j]);
+		tok = strtok(hold, "=");
+		if (strcmp(tok, "PATH1") == 0)
+			printf("%s\n", environ[j]);
+		j++;
+		free(hold);
+	}
 	args = (char **)malloc(count * sizeof(char *));
 	for (i = 0; i < count; i++)
 		args[i] = NULL;

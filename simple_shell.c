@@ -12,7 +12,7 @@
 
 
 /**
- * main - Main shell process.  Prompts the user for input and then uses
+ * main - Main shell process.  Prompts the user for input and then
  * builds an argument list, forks and uses execve to execute the desired
  * command.
  *

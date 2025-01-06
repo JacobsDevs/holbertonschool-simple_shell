@@ -86,7 +86,6 @@ char *find_path(char *pathstring)
 		}
 		if (strcmp(token, "PATH1") == 0)
 		{
-			printf("Path1 Located\n");
 			path1_found = 1;
 		}
 		i++;
